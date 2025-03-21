@@ -32,10 +32,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     \-----------------------------------------------------'
     */
     [0] = LAYOUT(
-                    KC_P7,      KC_P8,    KC_P9,             KC_PMNS,
-                    KC_P4,      KC_P5,    KC_P6,             KC_PPLS,
-                    KC_P1,      KC_P2,    KC_P3,             KC_PAST,
-        KC_MUTE,    TT(1),      KC_P0,    _______,           KC_ENTER
+                    KC_P7,      KC_P8,    KC_P9,          KC_PMNS,
+                    KC_P4,      KC_P5,    KC_P6,          KC_PSLS,
+                    KC_P1,      KC_P2,    KC_P3,          KC_PAST,
+        KC_MUTE,    TT(1),      KC_P0,    KC_PPLS,        KC_ENTER
     ),
     /*
             SUB LAYER  - RGB controls, Modes on encoder
@@ -49,31 +49,47 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     |             |  TT(1)  | Effect- | Effect+ |         |
     \-----------------------------------------------------'
     */
+    // RGB LAYER
+    // [1] = LAYOUT(
+    //                 RM_TOGG,    RM_VALD,     RM_VALU,      QK_BOOT,
+    //                 KC_NO,      RM_HUED,     RM_HUEU,      KC_NO,
+    //                 KC_NO,      RM_SATD,     RM_SATU,      KC_NO,
+    //     KC_NO,      TT(2),    RM_SPDD,     RM_SPDU,      KC_NO
+    // ),
+
     [1] = LAYOUT(
-                    RM_TOGG,    RM_VALD,     RM_VALU,      QK_BOOT,
-                    KC_NO,      RM_HUED,     RM_HUEU,      KC_NO,
-                    KC_NO,      RM_SATD,     RM_SATU,      KC_NO,
-        KC_NO,      _______,    RM_SPDD,     RM_SPDU,      KC_NO
+                    KC_HOME,     KC_UP,     KC_PGUP,      KC_NO,
+                    KC_LEFT,     _____,     KC_RGHT,      KC_NO,
+                    KC_END,      KC_DOWN,   KC_PGDN,      KC_NO,
+        KC_MUTE,      TT(2),     _____,     KC_COPY,      KC_PSTE
+    ),
+
+    [2] = LAYOUT(
+                    KC_HOME,     KC_UP,     KC_PGUP,      KC_NO,
+                    KC_LEFT,     _____,     KC_RGHT,      KC_NO,
+                    KC_END,      KC_DOWN,   KC_PGDN,      KC_NO,
+        KC_MUTE,      TT(0),     _____,     KC_COPY,      KC_PSTE
     ),
 };
 // clang-format on
 
+// ENCODER ON THE KEYBOAR IS FLIPPED!!!
 bool encoder_update_user(uint8_t index, bool clockwise) {
     switch (get_highest_layer(layer_state)) {
-        case 0:
-            // main layer, volume
-            if (clockwise) {
-                tap_code(KC_VOLU);
-            } else {
-                tap_code(KC_VOLD);
-            }
-            break;
-        default:
+        case 1:
             // rgb control layer, effects
-            if (clockwise) {
+            if (!clockwise) {
                 rgblight_step();
             } else {
                 rgblight_step_reverse();
+            }
+            break;
+        default:
+            // main layer, volume
+            if (!clockwise) {
+                tap_code(KC_VOLU);
+            } else {
+                tap_code(KC_VOLD);
             }
             break;
     }
