@@ -70,6 +70,7 @@ layer_state_t layer_state_set_kb(layer_state_t state) {
     uint8_t layer = get_highest_layer(state);
     gpio_write_pin(LED_00, layer & 0b1);
     gpio_write_pin(LED_01, (layer >> 1) & 0b1);
+    gpio_write_pin(LED_02, (layer >> 2) & 0b1);
     uprintf("%d string", layer);
     return layer_state_set_user(state);
 }
@@ -99,8 +100,9 @@ void matrix_init_kb(void) {
 }
 
 bool led_update_kb(led_t led_state) {
-    if (!led_update_user(led_state)) return false;
-    // put your keyboard LED indicator (ex: Caps Lock LED) toggling code here
-    gpio_write_pin(LED_02, !led_state.num_lock);
+    // SET NUMLOCK LED
+    // if (!led_update_user(led_state)) return false;
+    // // put your keyboard LED indicator (ex: Caps Lock LED) toggling code here
+    // gpio_write_pin(LED_02, !led_state.num_lock);
     return true;
 }
