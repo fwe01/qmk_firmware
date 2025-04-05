@@ -164,10 +164,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
     [BIOS_LAYER] = LAYOUT(
-                    KC_F7,            KC_UP,     KC_F10,   KC_F11,
-                    KC_LEFT,          KC_NO,     KC_RGHT,  KC_DEL,
-                    KC_NO,            KC_DOWN,   KC_NO,    KC_NO,
-        KC_MUTE,    MO(LAYER_CHANGE_JUNCTION),  KC_NO,     KC_NO,    KC_ENT
+                    KC_F7,                       KC_UP,     KC_F10,   KC_F11,
+                    KC_LEFT,                     KC_DOWN,   KC_RGHT,  KC_DEL,
+                    KC_NO,                       KC_DOWN,   KC_NO,    KC_NO,
+        KC_MUTE,    MO(LAYER_CHANGE_JUNCTION),   KC_NO,     KC_ESC,   KC_ENT
     ),
 
     [VIM_LAYER] = LAYOUT(
