@@ -20,3 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LED_00 B1
 #define LED_01 B3
 #define LED_02 B6
+
+//LED onboard pro micro
+#define LED_03 B0
+#define LED_04 D5 //for numlock

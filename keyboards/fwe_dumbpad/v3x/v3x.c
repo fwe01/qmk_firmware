@@ -13,7 +13,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
 #include "quantum.h"
 
 #ifdef RGB_MATRIX_ENABLE
@@ -51,6 +50,8 @@ void keyboard_pre_init_kb(void) {
     gpio_set_pin_output(LED_00);
     gpio_set_pin_output(LED_01);
     gpio_set_pin_output(LED_02);
+    gpio_set_pin_output(LED_03);
+    gpio_set_pin_output(LED_04);
     keyboard_pre_init_user();
 }
 
@@ -71,7 +72,7 @@ layer_state_t layer_state_set_kb(layer_state_t state) {
     gpio_write_pin(LED_00, layer & 0b1);
     gpio_write_pin(LED_01, (layer >> 1) & 0b1);
     gpio_write_pin(LED_02, (layer >> 2) & 0b1);
-    uprintf("%d string", layer);
+    gpio_write_pin(LED_03, !(layer >> 3) & 0b1);
     return layer_state_set_user(state);
 }
 
@@ -101,8 +102,8 @@ void matrix_init_kb(void) {
 
 bool led_update_kb(led_t led_state) {
     // SET NUMLOCK LED
-    // if (!led_update_user(led_state)) return false;
-    // // put your keyboard LED indicator (ex: Caps Lock LED) toggling code here
-    // gpio_write_pin(LED_02, !led_state.num_lock);
+    if (!led_update_user(led_state)) return false;
+    // put your keyboard LED indicator (ex: Caps Lock LED) toggling code here
+    gpio_write_pin(LED_04, led_state.num_lock);
     return true;
 }
